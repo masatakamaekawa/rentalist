@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Models\Post;
+use App\Models\Rental;
 use App\Http\Requests\CommentRequest;
 use Illuminate\Support\Facades\DB;
 
@@ -24,9 +25,9 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Post $post)
+    public function create(Post $post, Rental $rental)
     {
-        return view('comments.create', compact('post'));
+        return view('comments.create', compact('post','rental'));
     }
 
     /**
@@ -34,9 +35,10 @@ class CommentController extends Controller
      *
      * @param  \Illuminate\Http\CommentRequest  $request
      * @param  \App\Models\Post  $post
+     * @param  \App\Models\Rental  $rental
      * @return \Illuminate\Http\Response
      */
-    public function store(CommentRequest $request, Post $post)
+    public function store(CommentRequest $request, Post $post, Rental $rental)
     {
         $comment = new Comment($request->all());
         $comment->user_id = $request->user()->id;
@@ -46,6 +48,7 @@ class CommentController extends Controller
         try {
             // 登録
             $post->comments()->save($comment);
+            $rental->comments()->save($comment);
 
             // トランザクション終了(成功)
             DB::commit();
@@ -57,6 +60,7 @@ class CommentController extends Controller
 
         return redirect()
             ->route('posts.show', $post)
+            ->route('rentals.show', $rental)
             ->with('notice', 'コメントを登録しました');
     }
 
@@ -75,12 +79,13 @@ class CommentController extends Controller
      * Show the form for editing the specified resource.
 
      * @param  \App\Models\Post  $post
+     * @param  \App\Models\Rental  $rental
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post,Comment $comment)
+    public function edit(Post $post, Rental $rental, Comment $comment)
     {
-        return view('comments.edit', compact('post','comment'));
+        return view('comments.edit', compact('post','rental','comment'));
     }
 
     /**
@@ -90,11 +95,13 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function update(CommentRequest $request, Post $post, Comment $comment)
+    public function update(CommentRequest $request, Post $post, Rental $rental, Comment $comment)
     {
 
         if ($request->user()->cannot('update', $comment)) {
-            return redirect()->route('posts.show', $post)
+            return redirect()
+            ->route('posts.show', $post)
+            ->route('rentals.show', $rental)
                 ->withErrors('自分のコメント以外は更新できません');
         }
 
@@ -105,6 +112,7 @@ class CommentController extends Controller
         try {
             // 登録
             $post->comments()->save($comment);
+            $rental->comments()->save($comment);
 
             // トランザクション終了(成功)
             DB::commit();
@@ -116,6 +124,7 @@ class CommentController extends Controller
 
         return redirect()
             ->route('posts.show', $post)
+            ->route('rentals.show', $rental)
             ->with('notice', 'コメントを更新しました');
 
             
@@ -125,10 +134,11 @@ class CommentController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Post  $post
+     * @param  \App\Models\Rental  $rental
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post,Comment $comment)
+    public function destroy(Post $post, Rental $rental, Comment $comment)
     {
         //if ($request->user()->cannot('destroy', $comment)) {
         //    return redirect()->route('posts.show', $post)
@@ -148,7 +158,9 @@ class CommentController extends Controller
             return back()->withInput()->withErrors($e->getMessage());
         }
 
-        return redirect()->route('posts.show',$post)
+        return redirect()
+        ->route('posts.show',$post)
+        ->route('rentals.show',$rental)
             ->with('notice', 'コメントを削除しました');
     }
 

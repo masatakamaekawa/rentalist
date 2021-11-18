@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use GuzzleHttp\Middleware;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\Auth\OAuthController;
+use App\Http\Controllers\RentalController;
 
 use function App\Http\Controllers\store;
 
@@ -36,4 +38,31 @@ Route::resource('posts.comments', CommentController::class)
     ->only(['create', 'store', 'edit', 'update', 'destroy'])
     ->middleware('auth');
 
+Route::get('/', [RentalController::class, 'index'])
+    ->name('root');
+
+Route::resource('rentals', RentalController::class)
+    ->only(['create', 'store', 'edit', 'update', 'destroy'])
+    ->middleware('auth');
+
+Route::resource('rentals', RentalController::class)
+    ->only(['show', 'index']);
+
+Route::resource('rentals.comments', CommentController::class)
+    ->only(['create', 'store', 'edit', 'update', 'destroy'])
+    ->middleware('auth');
+
 require __DIR__.'/auth.php';
+
+// authから始まるルーティングに認証前にアクセスがあった場合
+Route::prefix('auth')->middleware('guest')->group(function () {
+    // auth/githubにアクセスがあった場合はOAuthControllerのredirectToProviderアクションへルーティング
+    Route::get('/{provider}', [OAuthController::class, 'redirectToProvider'])
+        ->where('provider', 'line|google')
+        ->name('redirectToProvider');
+
+    // auth/github/callbackにアクセスがあった場合はOAuthControllerのoauthCallbackアクションへルーティング
+    Route::get('/{provider}/callback', [OAuthController::class, 'oauthCallback'])
+        ->where('provider', 'line|google')
+        ->name('oauthCallback');
+});
