@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
 
 class Post extends Model
 {
@@ -39,5 +40,13 @@ class Post extends Model
     public function getImageUrlAttribute()
     {
         return Storage::url($this->image_path);
+    }
+
+    public function scopeSearch(Builder $query, $params)
+    {
+        if (!empty($params['title'])) {
+            $query->where('title', 'like', '%' . $params['title'] . '%');
+        }
+        return $query;
     }
 }

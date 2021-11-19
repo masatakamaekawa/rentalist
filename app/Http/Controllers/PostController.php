@@ -186,4 +186,5 @@ class PostController extends Controller
     {
         return date('YmdHis') . '_' . $file->getClientOriginalName();
     }
+    
 }

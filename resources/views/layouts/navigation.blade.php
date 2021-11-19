@@ -4,11 +4,30 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center">
+                <div class="flex-shrink-0 flex items-center mr-2">
                     <a href="{{ route('root') }}">
                         <x-application-logo class="block h-10 w-auto fill-current text-gray-600" />
                     </a>
                 </div>
+
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="{{ route('rentals.index') }}"
+                        class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline block mr-2">レンタル希望一覧</a>
+                    </a>
+                </div>
+
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="{{ route('posts.index') }}"
+                        class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline block">登録商品一覧</a>
+                    </a>
+                </div>
+
+            <form class="form-inline my-2 my-lg-0 ml-3">
+                <div class="form-group">
+                    <input type="search" class="form-control mr-sm-2" name="search"  value="{{request('search')}}" placeholder="キーワードを入力" aria-label="検索...">
+                    <input type="submit" value="検索" class="btn btn-info">
+                </div>
+            </form>
             </div>
 
             <!-- Settings Dropdown -->

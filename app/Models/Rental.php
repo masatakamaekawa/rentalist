@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Rental extends Model
 {
@@ -28,5 +29,13 @@ class Rental extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function scopeSearch(Builder $query, $params)
+    {
+        if (!empty($params['title'])) {
+            $query->where('title', 'like', '%' . $params['title'] . '%');
+        }
+        return $query;
     }
 }
