@@ -6,6 +6,7 @@ use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -14,9 +15,15 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::with('user')->latest()->paginate(10);
+        $title = $request->title;
+        $category = $request->category;
+
+        $params = $request->query();
+        $posts = Post::search($params)->paginate(10);
+
+        $posts->appends(compact('title', 'category'));
 
         return view('posts.index', compact('posts'));
     }

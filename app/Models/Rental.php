@@ -36,6 +36,9 @@ class Rental extends Model
         if (!empty($params['title'])) {
             $query->where('title', 'like', '%' . $params['title'] . '%');
         }
+        if (!empty($params['category'])) {
+            $query->where('category', 'like', '%' . $params['category'] . '%');
+        }
         return $query;
     }
 }

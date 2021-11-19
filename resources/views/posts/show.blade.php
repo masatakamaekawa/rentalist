@@ -48,7 +48,13 @@
             <hr class="my-4">
             <div class="flex justify-end">
                 <a href="{{ route('posts.comments.create', $post) }}"
-                    class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block">コメント登録</a>
+                    class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block mr-2">コメント</a>
+
+            <hr class="my-4">
+            <div class="flex justify-end">
+                <a href="{{ route('posts.stripes.charge', $post) }}"
+                    class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block">レンタル</a>
+            </div>
             </div>
         @endauth
 

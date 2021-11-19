@@ -38,6 +38,8 @@ Route::resource('posts.comments', CommentController::class)
     ->only(['create', 'store', 'edit', 'update', 'destroy'])
     ->middleware('auth');
 
+Route::get('/charge', [StripePaymentsController::class,'charge'])->name('stripes.charge');
+
 Route::get('/', [RentalController::class, 'index'])
     ->name('root');
 

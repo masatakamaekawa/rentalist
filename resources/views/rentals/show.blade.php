@@ -47,7 +47,7 @@
             <hr class="my-4">
             <div class="flex justify-end">
                 <a href="{{ route('rentals.comments.create', $rental) }}"
-                    class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block">コメント登録</a>
+                    class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block">コメント</a>
             </div>
         @endauth
 

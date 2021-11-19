@@ -24,8 +24,9 @@
 
             <form class="form-inline my-2 my-lg-0 ml-3">
                 <div class="form-group">
-                    <input type="search" class="form-control mr-sm-2" name="search"  value="{{request('search')}}" placeholder="キーワードを入力" aria-label="検索...">
-                    <input type="submit" value="検索" class="btn btn-info">
+                    <input class="form-control mr-sm-2" type="search" name="title" placeholder="商品名">
+                    <input class="form-control mr-sm-2" type="search" name="category" placeholder="カテゴリ">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">検索</button>
                 </div>
             </form>
             </div>

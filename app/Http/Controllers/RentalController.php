@@ -15,9 +15,16 @@ class RentalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rentals = Rental::with('user')->latest()->paginate(4);
+        $title = $request->title;
+        $category = $request->category;
+
+        $params = $request->query();
+        $rentals = Rental::search($params)->paginate(10);
+
+        $rentals->appends(compact('title', 'category'));
+
         return view('rentals.index', compact('rentals'));
     }
 
