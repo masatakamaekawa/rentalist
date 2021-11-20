@@ -41,4 +41,9 @@ class Rental extends Model
         }
         return $query;
     }
+
+    public function entries()
+    {
+        return $this->hasMany(Entry::class);
+    }
 }

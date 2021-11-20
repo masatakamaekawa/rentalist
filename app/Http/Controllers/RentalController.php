@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Consts\UserConst;
 use Illuminate\Http\Request;
 use App\Http\Requests\RentalRequest;
 use App\Models\Rental;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class RentalController extends Controller
 {
@@ -74,12 +76,21 @@ class RentalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Rental $rental)
     {
-        $rental = Rental::with(['user'])->find($id);
+        $entry = '';
+        $entries = [];
+
+        $entry = $rental->entries()
+            ->where('user_id', Auth::user()->id)->first();
+            // }
+        if ($entry = $rental->entries()->with('user')->get());
+
+        $rental = Rental::with(['user'])->find($rental->id);
+
         $comments = $rental->comments()->latest()->get()->load(['user']);
 
-        return view('rentals.show', compact('rental', 'comments'));
+        return view('rentals.show', compact('rental', 'comments', 'entry', 'entries'));
     }
 
     /**

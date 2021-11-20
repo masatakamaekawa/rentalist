@@ -7,6 +7,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Auth\OAuthController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\StripePaymentsController;
+use App\Http\Controllers\EntryController;
 
 use function App\Http\Controllers\store;
 
@@ -52,11 +53,24 @@ Route::resource('rentals', RentalController::class)
     ->middleware('auth');
 
 Route::resource('rentals', RentalController::class)
-    ->only(['show', 'index']);
+    ->only(['show', 'index'])
+    ->middleware(['auth']);
 
 Route::resource('rentals.comments', CommentController::class)
     ->only(['create', 'store', 'edit', 'update', 'destroy'])
     ->middleware('auth');
+
+Route::patch('/rentals/{rental}/entries/{entry}/approval', [EntryController::class, 'approval'])
+    ->name('rentals.entries.approval')
+    ->middleware(['auth:users']);
+
+Route::patch('/rentals/{rental}/entries/{entry}/reject', [EntryController::class, 'reject'])
+    ->name('rentals.entries.reject')
+    ->middleware(['auth:users']);
+
+Route::resource('rentals.entries', RentalController::class)
+    ->only(['create', 'destroy'])
+    ->middleware(['auth:users']);
 
 require __DIR__.'/auth.php';
 

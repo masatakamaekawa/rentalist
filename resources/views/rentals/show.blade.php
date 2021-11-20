@@ -51,6 +51,65 @@
             </div>
         @endauth
 
+        @if (Auth::check())
+            @if (empty($entry))
+                <form action="{{ route('rentals.entries.store', $rental) }}" method="post">
+                    @csrf
+                    <input type="submit" value="貸出希望" onclick="if(!confirm('貸出希望しますか？')){return false};"
+                        class="w-full sm:w-40 bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32">
+                </form>
+            @else
+                <form action="{{ route('rentals.entries.destroy', [$rental, $entry]) }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <input type="submit" value="貸出希望取消" onclick="if(!confirm('貸出希望を取り消しますか？')){return false};"
+                        class="w-full sm:w-40 bg-gradient-to-r from-pink-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-pink-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32">
+                </form>
+            @endif
+        @endif
+        
+        @if (!empty($entries))
+            <hr>
+            <h2 class="flex justify-center font-bold text-lg my-4">貸出希望一覧</h2>
+            <div class="">
+                <form method="post">
+                    @csrf
+                    @method('PATCH')
+                    <table class="min-w-full table-fixed text-center">
+                        <thead>
+                            <tr class="text-gray-700 ">
+                                <th class="w-1/5 px-4 py-2">ニックネーム</th>
+                                <th class="w-1/5 px-4 py-2">エントリー日</th>
+                                <th class="w-1/5 px-4 py-2">ステータス</th>
+                                <th class="w-2/5 px-4 py-2"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($entries as $e)
+                                <tr>
+                                    <td>{{ $e->user->name }}</td>
+                                    <td>{{ $e->created_at->format('Y-m-d') }}</td>
+                                    <td>{{ array_search($e->status, EntryConst::STATUS_LIST) }}</td>
+                                    <td>
+                                        <div class="flex flex-col sm:flex-row items-center sm:justify-end text-center">
+                                            <input type="submit" value="承認"
+                                                formaction="{{ route('rentals.entries.approval', [$rental, $e]) }}"
+                                                onclick="if(!confirm('希望しますか？')){return false};"
+                                                class="w-full sm:w-32 bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32">
+                                            <input type="submit" value="却下"
+                                                formaction="{{ route('rentals.entries.reject', [$rental, $e]) }}"
+                                                onclick="if(!confirm('却下しますか？')){return false};"
+                                                class="bg-gradient-to-r from-pink-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-pink-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32 ml-2">
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        @endif
+
         <section class="font-sans break-normal text-gray-900 ">
             @foreach ($comments as $comment)
                 <div class="my-2">
@@ -60,11 +119,11 @@
 
                     <div class="flex justify-end text-center my-4">
                         @can('update', $comment)
-                            <a href="{{ route('rentals.comments.edit', [$rental,$comment]) }}"
+                            <a href="{{ route('rentals.comments.edit', [$rental, $comment]) }}"
                                 class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">編集</a>
                         @endcan
                         @can('delete', $comment)
-                            <form action="{{ route('rentals.comments.destroy', [$rental,$comment]) }}" method="rental">
+                            <form action="{{ route('rentals.comments.destroy', [$rental, $comment]) }}" method="rental">
                                 @csrf
                                 @method('DELETE')
                                 <input type="submit" value="削除" onclick="if(!confirm('削除しますか？')){return false};"

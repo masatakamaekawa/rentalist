@@ -56,4 +56,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(IdentityProvider::class);
     }
+
+    public function entries()
+    {
+        return $this->hasMany(Entry::class);
+    }
 }

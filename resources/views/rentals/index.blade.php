@@ -6,7 +6,7 @@
         <div class="flex flex-wrap -mx-1 lg:-mx-4 mb-4">
             @foreach ($rentals as $rental)
                 <article class="w-full px-4 md:w-1/2 text-xl text-gray-800 leading-normal">
-                    <a href="{{ route('rentals.show', $rental) }}">
+                    <a href="{{ route('rentals.show', $rental ) }}">
                         <h2 class="font-bold font-sans break-normal text-gray-900 pt-6 pb-1 text-3xl md:text-4xl">
                             {{ $rental->title }}</h2>
                         <h3>{{ $rental->user->name }}</h3>
