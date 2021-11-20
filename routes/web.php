@@ -6,6 +6,7 @@ use GuzzleHttp\Middleware;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Auth\OAuthController;
 use App\Http\Controllers\RentalController;
+use App\Http\Controllers\StripePaymentsController;
 
 use function App\Http\Controllers\store;
 
@@ -38,7 +39,10 @@ Route::resource('posts.comments', CommentController::class)
     ->only(['create', 'store', 'edit', 'update', 'destroy'])
     ->middleware('auth');
 
-Route::get('/charge', [StripePaymentsController::class,'charge'])->name('stripes.charge');
+Route::post('/charge', [StripePaymentsController::class,'charge'])->name('charge');
+Route::get('/charge', function() {
+    return view('stripes.charge');
+})->name('posts.stripes.charge');
 
 Route::get('/', [RentalController::class, 'index'])
     ->name('root');
