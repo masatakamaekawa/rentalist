@@ -1,0 +1,36 @@
+###register
+POST /api/register
+Host: localhost
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name":"sparta0306",
+    "email":"sparta0306@gmail.com",
+    "password":"password"
+}
+
+###login
+POST /api/login
+Host: localhost
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email":"sparta0306@gmail.com",
+    "password":"password"
+}
+
+### getUser
+GET /api/user
+Host: localhost
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer 1|JxW4aBcwyiYVDwbsNjw3XBv5QKfawYlDzzouHi6w
+
+###apipost
+GET /api/posts
+Host: localhost
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer 2|feq5eRZsGgaNTdbz4riJCbAp7j6gFOYVdiXhaV5p
