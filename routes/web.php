@@ -60,19 +60,21 @@ Route::resource('rentals.comments', CommentController::class)
     ->only(['create', 'store', 'edit', 'update', 'destroy'])
     ->middleware('auth');
 
+
+
+require __DIR__.'/auth.php';
+
 Route::patch('/rentals/{rental}/entries/{entry}/approval', [EntryController::class, 'approval'])
     ->name('rentals.entries.approval')
-    ->middleware(['auth:users']);
+    ->middleware(['auth']);
 
 Route::patch('/rentals/{rental}/entries/{entry}/reject', [EntryController::class, 'reject'])
     ->name('rentals.entries.reject')
-    ->middleware(['auth:users']);
+    ->middleware(['auth']);
 
 Route::resource('rentals.entries', EntryController::class)
     ->only(['store', 'destroy'])
-    ->middleware(['auth:users']);
-
-require __DIR__.'/auth.php';
+    ->middleware(['auth']);
 
 // authから始まるルーティングに認証前にアクセスがあった場合
 Route::prefix('auth')->middleware('guest')->group(function () {

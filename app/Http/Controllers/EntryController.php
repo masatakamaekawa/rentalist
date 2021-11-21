@@ -16,7 +16,7 @@ class EntryController extends Controller
     * @param  \App\Models\Rental  $rental
     * @return \Illuminate\Http\Response
     */
-    public function store(Rental $rental)
+    public function store(Rental $rental, Entry $entry)
     {
         $entry = new Entry([
             'rental_id' => $rental->id,
@@ -33,6 +33,7 @@ class EntryController extends Controller
             ->route('rentals.show', $rental)
             ->with('notice', '貸出希望しました');
     }
+    
     /**
     * Remove the specified resource from storage.
     *
