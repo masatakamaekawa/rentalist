@@ -83,8 +83,6 @@ class RentalController extends Controller
 
         $entry = $rental->entries()
             ->where('user_id', Auth::user()->id)->first();
-            // }
-        if ($entry = $rental->entries()->with('user')->get());
 
         $rental = Rental::with(['user'])->find($rental->id);
 

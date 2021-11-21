@@ -68,8 +68,8 @@ Route::patch('/rentals/{rental}/entries/{entry}/reject', [EntryController::class
     ->name('rentals.entries.reject')
     ->middleware(['auth:users']);
 
-Route::resource('rentals.entries', RentalController::class)
-    ->only(['create', 'destroy'])
+Route::resource('rentals.entries', EntryController::class)
+    ->only(['store', 'destroy'])
     ->middleware(['auth:users']);
 
 require __DIR__.'/auth.php';

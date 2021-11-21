@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Consts\UserConst;
 use App\Models\Rental;
 use App\Models\Entry;
 use Illuminate\Support\Facades\Auth;

@@ -47,27 +47,27 @@
             <hr class="my-4">
             <div class="flex justify-end">
                 <a href="{{ route('rentals.comments.create', $rental) }}"
-                    class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block">コメント</a>
+                    class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block mr-4">コメント</a>
+
+                @if (Auth::check())
+                    @if (empty($entry))
+                        <form action="{{ route('rentals.entries.store', $rental) }}" method="post">
+                            @csrf
+                            <input type="submit" value="貸出希望" onclick="if(!confirm('貸出希望しますか？')){return false};"
+                                class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block">
+                        </form>
+                    @else
+                        <form action="{{ route('rentals.entries.destroy', [$rental, $entry]) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <input type="submit" value="貸出希望取消" onclick="if(!confirm('貸出希望を取り消しますか？')){return false};"
+                                class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block">
+                        </form>
+                    @endif
+                @endif
             </div>
         @endauth
 
-        @if (Auth::check())
-            @if (empty($entry))
-                <form action="{{ route('rentals.entries.store', $rental) }}" method="post">
-                    @csrf
-                    <input type="submit" value="貸出希望" onclick="if(!confirm('貸出希望しますか？')){return false};"
-                        class="w-full sm:w-40 bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32">
-                </form>
-            @else
-                <form action="{{ route('rentals.entries.destroy', [$rental, $entry]) }}" method="post">
-                    @csrf
-                    @method('DELETE')
-                    <input type="submit" value="貸出希望取消" onclick="if(!confirm('貸出希望を取り消しますか？')){return false};"
-                        class="w-full sm:w-40 bg-gradient-to-r from-pink-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-pink-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32">
-                </form>
-            @endif
-        @endif
-        
         @if (!empty($entries))
             <hr>
             <h2 class="flex justify-center font-bold text-lg my-4">貸出希望一覧</h2>
