@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use GuzzleHttp\Middleware;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\RentalCommentController;
 use App\Http\Controllers\Auth\OAuthController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\StripePaymentsController;
@@ -56,7 +57,7 @@ Route::resource('rentals', RentalController::class)
     ->only(['show', 'index'])
     ->middleware(['auth']);
 
-Route::resource('rentals.comments', CommentController::class)
+Route::resource('rentals.rentalcomments', RentalCommentController::class)
     ->only(['create', 'store', 'edit', 'update', 'destroy'])
     ->middleware('auth');
 

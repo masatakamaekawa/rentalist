@@ -86,9 +86,9 @@ class RentalController extends Controller
 
         $rental = Rental::with(['user'])->find($rental->id);
 
-        $comments = $rental->comments()->latest()->get()->load(['user']);
+        $rentalcomments = $rental->rentalcomments()->latest()->get()->load(['user']);
 
-        return view('rentals.show', compact('rental', 'comments', 'entry', 'entries'));
+        return view('rentals.show', compact('rental', 'rentalcomments', 'entry', 'entries'));
     }
 
     /**

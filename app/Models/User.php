@@ -52,6 +52,11 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
+    public function rentalcomments()
+    {
+        return $this->hasMany(RentalComment::class);
+    }
+
     public function identityProvider()
     {
         return $this->hasOne(IdentityProvider::class);

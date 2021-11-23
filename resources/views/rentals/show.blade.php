@@ -46,7 +46,7 @@
         @auth
             <hr class="my-4">
             <div class="flex justify-end">
-                <a href="{{ route('rentals.comments.create', $rental) }}"
+                <a href="{{ route('rentals.rentalcomments.create', $rental) }}"
                     class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block mr-4">コメント</a>
 
                 @if (Auth::check())
@@ -111,19 +111,19 @@
         @endif
 
         <section class="font-sans break-normal text-gray-900 ">
-            @foreach ($comments as $comment)
+            @foreach ($rentalcomments as $rentalcomment)
                 <div class="my-2">
-                    <span class="font-bold mr-3">{{ $comment->user->name }}</span>
-                    <span class="text-sm">{{ $comment->created_at }}</span>
-                    <p>{!! nl2br(e($comment->body)) !!}</p>
+                    <span class="font-bold mr-3">{{ $rentalcomment->user->name }}</span>
+                    <span class="text-sm">{{ $rentalcomment->created_at }}</span>
+                    <p>{!! nl2br(e($rentalcomment->body)) !!}</p>
 
                     <div class="flex justify-end text-center my-4">
-                        @can('update', $comment)
-                            <a href="{{ route('rentals.comments.edit', [$rental, $comment]) }}"
+                        @can('update', $rentalcomment)
+                            <a href="{{ route('rentals.rentalcomments.edit', [$rental, $rentalcomment]) }}"
                                 class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">編集</a>
                         @endcan
-                        @can('delete', $comment)
-                            <form action="{{ route('rentals.comments.destroy', [$rental, $comment]) }}" method="rental">
+                        @can('delete', $rentalcomment)
+                            <form action="{{ route('rentals.rentalcomments.destroy', [$rental, $rentalcomment]) }}" method="rental">
                                 @csrf
                                 @method('DELETE')
                                 <input type="submit" value="削除" onclick="if(!confirm('削除しますか？')){return false};"

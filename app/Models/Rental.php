@@ -26,9 +26,9 @@ class Rental extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function comments()
+    public function rentalcomments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(RentalComment::class);
     }
 
     public function scopeSearch(Builder $query, $params)

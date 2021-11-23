@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comment;
-use App\Models\Post;
-use App\Http\Requests\CommentRequest;
+use App\Models\RentalComment;
+use App\Models\Rental;
+use Illuminate\Http\Request;
+use App\Http\Requests\RentalCommentRequest;
 use Illuminate\Support\Facades\DB;
 
-class CommentController extends Controller
+class RentalCommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,28 +25,28 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Post $post)
+    public function create(Rental $rental)
     {
-        return view('comments.create', compact('post'));
+    return view('rentalcomments.create', compact('rental'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\CommentRequest  $request
-     * @param  \App\Models\Post  $post
+     * @param  \App\Http\Requests\RentalCommentRequest  $request
+     * @param  \App\Models\Rental  $rental
      * @return \Illuminate\Http\Response
      */
-    public function store(CommentRequest $request, Post $post)
+    public function store(RentalCommentRequest $request, Rental $rental)
     {
-        $comment = new Comment($request->all());
-        $comment->user_id = $request->user()->id;
+        $rentalcomment = new RentalComment($request->all());
+        $rentalcomment->user_id = $request->user()->id;
 
         // トランザクション開始
         DB::beginTransaction();
         try {
             // 登録
-            $post->comments()->save($comment);
+            $rental->rentalcomments()->save($rentalcomment);
 
             // トランザクション終了(成功)
             DB::commit();
@@ -56,56 +57,55 @@ class CommentController extends Controller
         }
 
         return redirect()
-            ->route('posts.show', $post)
+            ->route('rentals.show', $rental)
             ->with('notice', 'コメントを登録しました');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\RentalComment  $rentalComment
      * @return \Illuminate\Http\Response
      */
-    public function show(Comment $comment)
+    public function show(RentalComment $rentalComment)
     {
         //
     }
 
     /**
      * Show the form for editing the specified resource.
-
-     * @param  \App\Models\Post  $post
-     * @param  \App\Models\Comment  $comment
+     *
+     * @param  \App\Models\Rental  $rental
+     * @param  \App\Models\RentalComment  $rentalComment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post, Comment $comment)
+    public function edit(Rental $rental, RentalComment $rentalcomment)
     {
-        return view('comments.edit', compact('post','comment'));
+        return view('rentalcomments.edit', compact('rental', 'rentalcomment'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\CommentRequest  $request
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\Rental  $rental
+     * @param  \App\Http\Requests\RentalCommentRequest  $request
+     * @param  \App\Models\RentalComment  $rentalComment
      * @return \Illuminate\Http\Response
      */
-    public function update(CommentRequest $request, Post $post, Comment $comment)
+    public function update(RentalCommentRequest $request, Rental $rental, RentalComment $rentalcomment)
     {
-
-        if ($request->user()->cannot('update', $comment)) {
-            return redirect()
-            ->route('posts.show', $post)
+        if ($request->user()->cannot('update', $rentalcomment)) {
+            return redirect()->route('rentals.show', $rental)
                 ->withErrors('自分のコメント以外は更新できません');
         }
 
-        $comment ->fill($request->all());
+        $rentalcomment->fill($request->all());
 
         // トランザクション開始
         DB::beginTransaction();
         try {
-            // 登録
-            $post->comments()->save($comment);
+            // 更新
+            $rentalcomment->save();
 
             // トランザクション終了(成功)
             DB::commit();
@@ -115,31 +115,23 @@ class CommentController extends Controller
             return back()->withInput()->withErrors($e->getMessage());
         }
 
-        return redirect()
-            ->route('posts.show', $post)
+        return redirect()->route('rentals.show', $rental)
             ->with('notice', 'コメントを更新しました');
-
-            
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Post  $post
-     * @param  \App\Models\Comment  $comment
+     * @param  \App\Models\Rental  $rental
+     * @param  \App\Models\RentalComment  $rentalComment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post, Comment $comment)
+    public function destroy(Rental $rental, RentalComment $rentalComment)
     {
-        //if ($request->user()->cannot('destroy', $comment)) {
-        //    return redirect()->route('posts.show', $post)
-        //        ->withErrors('自分のコメント以外は削除できません');
-        //}
-
         // トランザクション開始
         //DB::beginTransaction();
         try {
-            $comment->delete();
+            $rentalComment->delete();
 
             // トランザクション終了(成功)
             //DB::commit();
@@ -149,13 +141,7 @@ class CommentController extends Controller
             return back()->withInput()->withErrors($e->getMessage());
         }
 
-        return redirect()
-        ->route('posts.show',$post)
-            ->with('notice', 'コメントを削除しました');
-    }
-
-    private static function createFileName($file)
-    {
-        return date('YmdHis') . '_' . $file->getClientOriginalName();
+        return redirect()->route('rentals.show', $rental)
+          ->with('notice', 'コメントを削除しました');
     }
 }
