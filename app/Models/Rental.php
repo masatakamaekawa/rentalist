@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use App\Consts\UserConst;
+use Illuminate\Support\Facades\Auth;
 
 class Rental extends Model
 {
@@ -20,6 +22,16 @@ class Rental extends Model
         'category',
         'delivery',
         ];
+
+    public function scopeMyRental(Builder $query)
+    {
+        $query->where(
+            'user_id',
+            Auth::user()->id
+        );
+
+        return $query;
+    }
 
     public function user()
     {

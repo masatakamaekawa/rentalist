@@ -60,7 +60,7 @@ class EntryController extends Controller
         $entry->save();
 
         return redirect()->route('rentals.show', $rental)
-            ->with('notice', 'エントリーを承認しました');
+            ->with('notice', '貸出希望を承認しました');
     }
 
     /**
@@ -75,6 +75,6 @@ class EntryController extends Controller
         $entry->save();
 
         return redirect()->route('rentals.show', $rental)
-            ->with('notice', 'エントリーを却下しました');
+            ->with('notice', '貸出希望を却下しました');
     }
 }

@@ -142,6 +142,6 @@ class RentalCommentController extends Controller
         }
 
         return redirect()->route('rentals.show', $rental)
-          ->with('notice', 'コメントを削除しました');
+            ->with('notice', 'コメントを削除しました');
     }
 }

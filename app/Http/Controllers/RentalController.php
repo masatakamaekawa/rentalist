@@ -9,6 +9,7 @@ use App\Models\Rental;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\UserController;
 
 class RentalController extends Controller
 {
@@ -83,6 +84,11 @@ class RentalController extends Controller
 
         $entry = $rental->entries()
             ->where('user_id', Auth::user()->id)->first();
+
+        // if (Auth::check() &&
+        //     Auth::user()->id == $rental->user_id) {
+        //     $entries = $rental->entries()->with('user')->get();
+        // }
 
         $rental = Rental::with(['user'])->find($rental->id);
 
@@ -169,7 +175,7 @@ class RentalController extends Controller
         }
 
         return redirect()->route('rentals.index')
-            ->with('notice', '記事を削除しました');
+            ->with('notice', 'レンタルリストを削除しました');
     }
 
     private static function createFileName($file)
