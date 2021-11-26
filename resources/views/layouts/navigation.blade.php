@@ -13,17 +13,17 @@
 
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('rentals.index') }}"
-                        class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline block mr-2">レンタル希望一覧</a>
+                        class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block mr-2">レンタル希望一覧</a>
                     </a>
                 </div>
 
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('posts.index') }}"
-                        class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline block">登録商品一覧</a>
+                        class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block">登録商品一覧</a>
                     </a>
                 </div>
 
-            <form class="form-inline my-2 my-lg-0 ml-3">
+            <form class="form-inline my-3 my-lg-0 ml-3">
                 <div class="form-group">
                     <input class="form-control mr-sm-2" type="search" name="title" placeholder="商品名">
                     <input class="form-control mr-sm-2" type="search" name="category" placeholder="カテゴリ">
@@ -68,15 +68,15 @@
                                 @csrf
                                 <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
                                                             this.closest('form').submit();">
-                                    {{ __('Log Out') }}
+                                    {{ __('ログアウト') }}
                                 </x-dropdown-link>
                             </form>
                         @else
                             <x-dropdown-link :href="route('register')">
-                                {{ __('Sign Up') }}
+                                {{ __('サインアップ') }}
                             </x-dropdown-link>
                             <x-dropdown-link :href="route('login')">
-                                {{ __('Log In') }}
+                                {{ __('ログイン') }}
                             </x-dropdown-link>
                         @endauth
                     </x-slot>

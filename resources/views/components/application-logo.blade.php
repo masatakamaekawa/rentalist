@@ -1,1 +1,1 @@
-<h1 class="text-lg">rentalist</h1>
+<h1 class="text-3xl">rentalist</h1>

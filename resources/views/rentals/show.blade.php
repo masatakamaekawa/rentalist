@@ -86,6 +86,14 @@
 
             @if ($rental->user_id == Auth::user()->id)
                 <hr>
+                <hr>
+                <hr>
+                <hr>
+                <hr>
+                <hr>
+                <hr>
+                <hr>
+                <hr>
                 <h2 class="d-grid gap-2 d-md-flex justify-content-md-end">貸出希望一覧</h2>
                 <div class="">
                     <form method="post">
@@ -107,15 +115,25 @@
                                         <td>{{ $e->created_at->format('Y-m-d') }}</td>
                                         <td>{{ array_search($e->status, EntryConst::STATUS_LIST) }}</td>
                                         <td>
-                                            <div class="flex flex-col sm:flex-row items-center sm:justify-end text-center">
-                                                <input type="submit" value="依頼"
-                                                    formaction="{{ route('rentals.entries.approval', [$rental, $e]) }}"
-                                                    onclick="if(!confirm('希望しますか？')){return false};"
-                                                    class="w-full sm:w-32 bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32">
-                                                <input type="submit" value="却下"
-                                                    formaction="{{ route('rentals.entries.reject', [$rental, $e]) }}"
-                                                    onclick="if(!confirm('却下しますか？')){return false};"
-                                                    class="bg-gradient-to-r from-pink-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-pink-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32 ml-2">
+                                            <div class="content">
+                                                <style type="text/css">
+                                                    
+                                                    button.stripe-button-el,
+                                                    button.stripe-button-el>span {
+                                                        background-color: #c50067 !important;
+                                                        background-image: none;
+                                                    }
+                                                
+                                                </style>
+                                                <form action="{{ route('charge') }}" method="POST">
+                                                    {{ csrf_field() }}
+                                                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ env('STRIPE_KEY') }}"
+                                                                                                        data-amount="1000" data-name="Stripe Demo" data-label="レンタルする"
+                                                                                                        data-description="Online course about integrating Stripe"
+                                                                                                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                                                                                                        data-locale="auto" data-currency="JPY">
+                                                    </script>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>
@@ -126,7 +144,7 @@
                 </div>
 
             @else
-                @if (empty($entry))
+                @if (empty($entries))
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <form action="{{ route('rentals.entries.store', $rental) }}" method="post">
                             @csrf
