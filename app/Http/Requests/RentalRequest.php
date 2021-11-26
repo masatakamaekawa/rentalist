@@ -28,6 +28,7 @@ class RentalRequest extends FormRequest
             'title' => 'required|string|max:50',
             'body' => 'required|string|max:2000',
             'price' => 'required|string|max:50',
+            // 'date' => 'required|string|max:50',
             'days' => 'required|string|max:50',
             'brand' => 'required|string|max:50',
             'area' => 'required|string|max:50',

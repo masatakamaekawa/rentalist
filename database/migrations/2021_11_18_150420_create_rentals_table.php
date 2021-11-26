@@ -18,6 +18,7 @@ class CreateRentalsTable extends Migration
             $table->string('title');
             $table->text('body');
             $table->string('price');
+            $table->string('date')->nullable();
             $table->string('days')->nullable();
             $table->string('brand')->nullable();
             $table->string('area');

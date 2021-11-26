@@ -46,22 +46,9 @@
 
         @auth
             <hr class="my-4">
-            <div class="flex justify-end">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <a href="{{ route('posts.comments.create', $post) }}"
                     class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline block mr-2">コメント</a>
-
-                <div class="content">
-                    <form action="{{ route('charge') }}" method="POST">
-                        {{ csrf_field() }}
-                        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ env('STRIPE_KEY') }}"
-                                                data-amount="1000" data-name="Stripe Demo" data-label="レンタルする"
-                                                data-description="Online course about integrating Stripe"
-                                                data-image="https://stripe.com/img/documentation/checkout/marketplace.png" data-locale="auto"
-                                                data-currency="JPY">
-                        </script>
-                    </form>
-                </div>
-            @endauth
 
             <section class="font-sans break-normal text-gray-900 ">
                 @foreach ($comments as $comment)
@@ -88,6 +75,17 @@
                     <hr>
                 @endforeach
             </section>
-
+                <div class="content">
+                    <form action="{{ route('charge') }}" method="POST">
+                        {{ csrf_field() }}
+                        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ env('STRIPE_KEY') }}"
+                                                data-amount="1000" data-name="Stripe Demo" data-label="レンタルする"
+                                                data-description="Online course about integrating Stripe"
+                                                data-image="https://stripe.com/img/documentation/checkout/marketplace.png" data-locale="auto"
+                                                data-currency="JPY">
+                        </script>
+                    </form>
+                </div>
+            @endauth
         </div>
 </x-app-layout>

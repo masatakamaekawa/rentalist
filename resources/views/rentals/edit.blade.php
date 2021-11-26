@@ -24,6 +24,14 @@
                     class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full py-2 px-3"
                     required placeholder="タイトル" value="{{ old('price', $rental->price) }}">
             </div>
+            {{-- <div class="mb-4">
+                <label class="block text-gray-700 text-sm mb-2" for="days">
+                    レンタル希望日
+                </label>
+                <input type="date" name="date" id="date"
+                    class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full py-2 px-3"
+                    required placeholder="タイトル" value="{{ old('date', $rental->date) }}">
+            </div> --}}
                 <div class="mb-4">
                 <label class="block text-gray-700 text-sm mb-2" for="days">
                     レンタル日数

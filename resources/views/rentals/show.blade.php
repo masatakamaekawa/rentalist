@@ -4,11 +4,11 @@
         <x-flash-message :message="session('notice')" />
         <x-validation-errors :errors="$errors" />
 
-        @if ($rental->user_id == Auth::user()->id)
+        {{-- @if ($rental->user_id == Auth::user()->id)
             <h2>自分の</h2>
         @else
             <h2>他人の</h2>
-        @endif
+        @endif --}}
 
         <article class="mb-2">
             <h2 class="font-bold font-sans break-normal text-gray-900 pt-6 pb-1 text-3xl md:text-4xl">
@@ -21,6 +21,8 @@
             </p>
             <p>【価格】</p>
             <p class="text-gray-700 text-base">{!! nl2br(e($rental->price)) !!}</p>
+            {{-- <p>【レンタル希望日】</p>
+            <p class="text-gray-700 text-base">{!! nl2br(e($rental->date)) !!}</p> --}}
             <p>【レンタル日数】</p>
             <p class="text-gray-700 text-base">{!! nl2br(e($rental->days)) !!}</p>
             <p>【ブランド】</p>
@@ -53,78 +55,79 @@
             <hr class="my-4">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <a href="{{ route('rentals.rentalcomments.create', $rental) }}"
-                    class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block mr-4">コメント</a>
-                    
-        <section class="font-sans break-normal text-gray-900 ">
-            @foreach ($rentalcomments as $rentalcomment)
-                <div class="my-2">
-                    <span class="font-bold mr-3">{{ $rentalcomment->user->name }}</span>
-                    <span class="text-sm">{{ $rentalcomment->created_at }}</span>
-                    <p>{!! nl2br(e($rentalcomment->body)) !!}</p>
-
-                    <div class="flex justify-end text-center my-4">
-                        @can('update', $rentalcomment)
-                            <a href="{{ route('rentals.rentalcomments.edit', [$rental, $rentalcomment]) }}"
-                                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">編集</a>
-                        @endcan
-                        @can('delete', $rentalcomment)
-                            <form action="{{ route('rentals.rentalcomments.destroy', [$rental, $rentalcomment]) }}"
-                                method="rental">
-                                @csrf
-                                @method('DELETE')
-                                <input type="submit" value="削除" onclick="if(!confirm('削除しますか？')){return false};"
-                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20">
-                            </form>
-                        @endcan
-                    </div>
-                </div>
-                <hr>
-            @endforeach
-        </section>
-
-        @if ($rental->user_id == Auth::user()->id)
-            <hr>
-            <h2 class="d-grid gap-2 d-md-flex justify-content-md-end">貸出希望一覧</h2>
-            <div class="">
-                <form method="post">
-                    @csrf
-                    @method('PATCH')
-                    <table class="min-w-full table-fixed text-center">
-                        <thead>
-                            <tr class="text-gray-700 ">
-                                <th class="w-1/5 px-4 py-2">ユーザー</th>
-                                <th class="w-1/5 px-4 py-2">申請日</th>
-                                <th class="w-1/5 px-4 py-2">ステータス</th>
-                                <th class="w-2/5 px-4 py-2"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($entries as $e)
-                                <tr>
-                                    <td>{{ $e->user->name }}</td>
-                                    <td>{{ $e->created_at->format('Y-m-d') }}</td>
-                                    <td>{{ array_search($e->status, EntryConst::STATUS_LIST) }}</td>
-                                    <td>
-                                        <div class="flex flex-col sm:flex-row items-center sm:justify-end text-center">
-                                            <input type="submit" value="依頼"
-                                                formaction="{{ route('rentals.entries.approval', [$rental, $e]) }}"
-                                                onclick="if(!confirm('希望しますか？')){return false};"
-                                                class="w-full sm:w-32 bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32">
-                                            <input type="submit" value="却下"
-                                                formaction="{{ route('rentals.entries.reject', [$rental, $e]) }}"
-                                                onclick="if(!confirm('却下しますか？')){return false};"
-                                                class="bg-gradient-to-r from-pink-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-pink-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32 ml-2">
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </form>
+                    class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-4">コメント</a>
             </div>
+            <section class="font-sans break-normal text-gray-900 ">
+                @foreach ($rentalcomments as $rentalcomment)
+                    <div class="my-2">
+                        <span class="font-bold mr-3">{{ $rentalcomment->user->name }}</span>
+                        <span class="text-sm">{{ $rentalcomment->created_at }}</span>
+                        <p>{!! nl2br(e($rentalcomment->body)) !!}</p>
 
-                @else
-                @if(!empty($entries))
+                        <div class="flex justify-end text-center my-4">
+                            @can('update', $rentalcomment)
+                                <a href="{{ route('rentals.rentalcomments.edit', [$rental, $rentalcomment]) }}"
+                                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">編集</a>
+                            @endcan
+                            @can('delete', $rentalcomment)
+                                <form action="{{ route('rentals.rentalcomments.destroy', [$rental, $rentalcomment]) }}"
+                                    method="rental">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="submit" value="削除" onclick="if(!confirm('削除しますか？')){return false};"
+                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20">
+                                </form>
+                            @endcan
+                        </div>
+                    </div>
+                    <hr>
+                @endforeach
+            </section>
+
+            @if ($rental->user_id == Auth::user()->id)
+                <hr>
+                <h2 class="d-grid gap-2 d-md-flex justify-content-md-end">貸出希望一覧</h2>
+                <div class="">
+                    <form method="post">
+                        @csrf
+                        @method('PATCH')
+                        <table class="min-w-full table-fixed text-center">
+                            <thead>
+                                <tr class="text-gray-700 ">
+                                    <th class="w-1/5 px-4 py-2">ユーザー</th>
+                                    <th class="w-1/5 px-4 py-2">申請日</th>
+                                    <th class="w-1/5 px-4 py-2">ステータス</th>
+                                    <th class="w-2/5 px-4 py-2"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($entries as $e)
+                                    <tr>
+                                        <td>{{ $e->user->name }}</td>
+                                        <td>{{ $e->created_at->format('Y-m-d') }}</td>
+                                        <td>{{ array_search($e->status, EntryConst::STATUS_LIST) }}</td>
+                                        <td>
+                                            <div class="flex flex-col sm:flex-row items-center sm:justify-end text-center">
+                                                <input type="submit" value="依頼"
+                                                    formaction="{{ route('rentals.entries.approval', [$rental, $e]) }}"
+                                                    onclick="if(!confirm('希望しますか？')){return false};"
+                                                    class="w-full sm:w-32 bg-gradient-to-r from-indigo-500 to-blue-600 hover:bg-gradient-to-l hover:from-blue-500 hover:to-indigo-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32">
+                                                <input type="submit" value="却下"
+                                                    formaction="{{ route('rentals.entries.reject', [$rental, $e]) }}"
+                                                    onclick="if(!confirm('却下しますか？')){return false};"
+                                                    class="bg-gradient-to-r from-pink-500 to-purple-600 hover:bg-gradient-to-l hover:from-purple-500 hover:to-pink-600 text-gray-100 p-2 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500 w-full sm:w-32 ml-2">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+
+            @else
+                @if (empty($entry))
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <form action="{{ route('rentals.entries.store', $rental) }}" method="post">
                             @csrf
                             <input type="submit" value="貸出申請" onclick="if(!confirm('貸出申請しますか？')){return false};"
@@ -137,9 +140,9 @@
                             <input type="submit" value="貸出申請取消" onclick="if(!confirm('貸出申請を取り消しますか？')){return false};"
                                 class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block">
                         </form>
-                    @endif
                 @endif
-            </div>
-        @endauth
+            @endif
+        </div>
+    @endauth
     </div>
 </x-app-layout>
