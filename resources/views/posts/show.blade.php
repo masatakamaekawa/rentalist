@@ -32,14 +32,14 @@
         <div class="flex flex-row text-center my-4">
             @can('update', $post)
                 <a href="{{ route('posts.edit', $post) }}"
-                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">編集</a>
+                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-20 mr-2">編集</a>
             @endcan
             @can('delete', $post)
                 <form action="{{ route('posts.destroy', $post) }}" method="post">
                     @csrf
                     @method('DELETE')
                     <input type="submit" value="削除" onclick="if(!confirm('削除しますか？')){return false};"
-                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20">
+                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-20">
                 </form>
             @endcan
         </div>
@@ -48,7 +48,7 @@
             <hr class="my-4">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <a href="{{ route('posts.comments.create', $post) }}"
-                    class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline mr-4">コメントする</a>
+                    class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-1 px-4 rounded-full focus:outline-none focus:shadow-outline mr-4">コメントする</a>
 
                 <section class="font-sans break-normal text-gray-900 ">
                     @foreach ($comments as $comment)
@@ -60,14 +60,14 @@
                             <div class="flex justify-end text-center my-4">
                                 @can('update', $comment)
                                     <a href="{{ route('posts.comments.edit', [$post, $comment]) }}"
-                                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">編集</a>
+                                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-20 mr-2">編集</a>
                                 @endcan
                                 @can('delete', $comment)
                                     <form action="{{ route('posts.comments.destroy', [$post, $comment]) }}" method="post">
                                         @csrf
                                         @method('DELETE')
                                         <input type="submit" value="削除" onclick="if(!confirm('削除しますか？')){return false};"
-                                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20">
+                                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-20">
                                     </form>
                                 @endcan
                             </div>
@@ -75,14 +75,16 @@
                         <hr>
                     @endforeach
                 </section>
+
                 <hr class="my-4">
-                <div class="content">
+                <div class="content ">
                     <style type="text/css">
                         button.stripe-button-el,
                         button.stripe-button-el>span {
                             background-color: #c50067 !important;
                             background-image: none;
                         }
+
                     </style>
                     <form action="{{ route('charge') }}" method="POST">
                         {{ csrf_field() }}
@@ -94,7 +96,7 @@
                         </script>
                     </form>
                 </div>
-                
-            @endauth
-        </div>
+            </div>
+
+        @endauth
 </x-app-layout>

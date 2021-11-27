@@ -38,14 +38,14 @@
         <div class="flex flex-row text-center my-4">
             @can('update', $rental)
                 <a href="{{ route('rentals.edit', $rental) }}"
-                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">編集</a>
+                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-20 mr-2">編集</a>
             @endcan
             @can('delete', $rental)
                 <form action="{{ route('rentals.destroy', $rental) }}" method="rental">
                     @csrf
                     @method('DELETE')
                     <input type="submit" value="削除" onclick="if(!confirm('削除しますか？')){return false};"
-                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20">
+                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-20">
                 </form>
             @endcan
         </div>
@@ -54,7 +54,7 @@
             <hr class="my-4">
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <a href="{{ route('rentals.rentalcomments.create', $rental) }}"
-                    class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-4">コメント</a>
+                    class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline mr-4">コメント</a>
             </div>
             <section class="font-sans break-normal text-gray-900 ">
                 @foreach ($rentalcomments as $rentalcomment)
@@ -66,7 +66,7 @@
                         <div class="flex justify-end text-center my-4">
                             @can('update', $rentalcomment)
                                 <a href="{{ route('rentals.rentalcomments.edit', [$rental, $rentalcomment]) }}"
-                                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">編集</a>
+                                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-20 mr-2">編集</a>
                             @endcan
                             @can('delete', $rentalcomment)
                                 <form action="{{ route('rentals.rentalcomments.destroy', [$rental, $rentalcomment]) }}"
@@ -74,7 +74,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <input type="submit" value="削除" onclick="if(!confirm('削除しますか？')){return false};"
-                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20">
+                                        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-20">
                                 </form>
                             @endcan
                         </div>
@@ -107,6 +107,7 @@
                                         <td>{{ array_search($e->status, EntryConst::STATUS_LIST) }}</td>
                                         <td>
                                             <div class="content">
+                                                <div class="rounded-full">
                                                 <style type="text/css">
                                                     
                                                     button.stripe-button-el,
@@ -120,12 +121,13 @@
                                                 <form action="{{ route('charge') }}" method="POST">
                                                     {{ csrf_field() }}
                                                     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ env('STRIPE_KEY') }}"
-                                                                                                        data-amount="1000" data-name="Stripe Demo" data-label="レンタルする"
+                                                                                                        data-amount="3000" data-name="Stripe Demo" data-label="レンタルする"
                                                                                                         data-description="Online course about integrating Stripe"
                                                                                                         data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
                                                                                                         data-locale="auto" data-currency="JPY">
                                                     </script>
                                                 </form>
+                                            </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -142,14 +144,14 @@
                         <form action="{{ route('rentals.entries.store', $rental) }}" method="post">
                             @csrf
                             <input type="submit" value="貸出申請" onclick="if(!confirm('貸出申請しますか？')){return false};"
-                                class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block">
+                                class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline block">
                         </form>
                 @else
                         <form action="{{ route('rentals.entries.destroy', [$rental, $entry]) }}" method="post">
                             @csrf
                             @method('DELETE')
                             <input type="submit" value="貸出申請取消" onclick="if(!confirm('貸出申請を取り消しますか？')){return false};"
-                                class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block">
+                                class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline block">
                         </form>
                     </div>
                 @endif
