@@ -17,6 +17,8 @@
                         </p>
                         <img class="object-contain" src="{{ $post->image_url }}" alt="">
                         <p class="text-gray-700 text-base">{{ Str::limit($post->body, 50) }}</p>
+                        <p class="text-blue-700 text-bold">{{ Str::limit($post->days, 50) }}</p>
+                        <p class="text-blue-700 text-bold">{{ Str::limit($post->price, 50) }}</p>
                     </a>
                 </article>
             @endforeach
