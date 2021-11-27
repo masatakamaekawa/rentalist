@@ -20,8 +20,8 @@
             </p>
             <p>【価格】</p>
             <p class="text-gray-700 text-base">{!! nl2br(e($rental->price)) !!}</p>
-            {{-- <p>【レンタル希望日】</p>
-            <p class="text-gray-700 text-base">{!! nl2br(e($rental->date)) !!}</p> --}}
+            <p>【レンタル希望日】</p>
+            <p class="text-gray-700 text-base">{!! nl2br(e($rental->date)) !!}</p>
             <p>【レンタル日数】</p>
             <p class="text-gray-700 text-base">{!! nl2br(e($rental->days)) !!}</p>
             <p>【ブランド】</p>

@@ -16,8 +16,9 @@
                         </p>
                         <img class="w-full mb-2" src="{{ $rental->image_url }}" alt="">
                         <p class="text-gray-700 text-base">{{ Str::limit($rental->body, 50) }}</p>
-                        <p class="text-blue-700 text-bold">{{ Str::limit($rental->days, 50) }}</p>
-                        <p class="text-blue-700 text-bold">{{ Str::limit($rental->price, 50) }}</p>
+                        <p class="text-gray-700 text-base">希望日:{{ Str::limit($rental->date, 50) }}</p>
+                        <p class="text-gray-700 text-base">希望日数:{{ Str::limit($rental->days, 50) }}</p>
+                        <p class="text-gray-700 text-base">希望価格:{{ Str::limit($rental->price, 50) }}</p>
                     </a>
                 </article>
             @endforeach

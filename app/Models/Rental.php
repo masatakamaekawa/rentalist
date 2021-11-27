@@ -16,6 +16,7 @@ class Rental extends Model
         'title',
         'body',
         'price',
+        'date',
         'days',
         'brand',
         'area',
