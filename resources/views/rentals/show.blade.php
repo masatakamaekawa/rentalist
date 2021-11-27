@@ -1,6 +1,5 @@
 <x-app-layout>
     <div class="container lg:w-3/4 md:w-4/5 w-11/12 mx-auto my-8 px-8 py-4 bg-white shadow-md">
-
         <x-flash-message :message="session('notice')" />
         <x-validation-errors :errors="$errors" />
 
@@ -86,7 +85,7 @@
 
             @if ($rental->user_id == Auth::user()->id)
                 <hr class="my-4">
-                <h2 class="d-grid gap-2 d-md-flex justify-content-md-end">貸出希望一覧</h2>
+                <h2 class="d-grid gap-2 d-md-flex justify-content-md-end">貸出申請一覧</h2>
                 <div class="">
                     <form method="post">
                         @csrf
@@ -94,10 +93,10 @@
                         <table class="min-w-full table-fixed text-center">
                             <thead>
                                 <tr class="text-gray-700 ">
-                                    <th class="w-1/5 px-4 py-2">ユーザー</th>
-                                    <th class="w-1/5 px-4 py-2">申請日</th>
-                                    <th class="w-1/5 px-4 py-2">ステータス</th>
-                                    <th class="w-2/5 px-4 py-2"></th>
+                                    <th class="w-1/5 px-4 py-2">名前</th>
+                                    <th class="w-1/5 px-4 py-2">日付</th>
+                                    <th class="w-1/5 px-4 py-2">状態</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -138,20 +137,21 @@
 
             @else
             <hr class="my-4">
-                @if (empty($entries))
+                @if (empty($entry))
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <form action="{{ route('rentals.entries.store', $rental) }}" method="post">
                             @csrf
                             <input type="submit" value="貸出申請" onclick="if(!confirm('貸出申請しますか？')){return false};"
                                 class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block">
                         </form>
-                    @else
+                @else
                         <form action="{{ route('rentals.entries.destroy', [$rental, $entry]) }}" method="post">
                             @csrf
                             @method('DELETE')
                             <input type="submit" value="貸出申請取消" onclick="if(!confirm('貸出申請を取り消しますか？')){return false};"
                                 class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block">
                         </form>
+                    </div>
                 @endif
             @endif
         </div>

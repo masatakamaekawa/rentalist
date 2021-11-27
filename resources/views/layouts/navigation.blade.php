@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-blue-100 border-b border-gray-100">
     <div class="col-xs-12 col-md-6">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -13,20 +13,20 @@
 
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('rentals.index') }}"
-                        class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block mr-2">希望一覧</a>
+                        class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block mr-2">希望一覧</a>
                     </a>
                 </div>
 
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('posts.index') }}"
-                        class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block">貸出一覧</a>
+                        class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block">貸出一覧</a>
                     </a>
                 </div>
 
             <form class="hidden sm:flex sm:items-center sm:ml-6">
                 <div class="form-group">
-                    <input class="form-control mr-sm-2" type="search" name="title" placeholder="商品名">
-                    <input class="form-control mr-sm-2" type="search" name="category" placeholder="カテゴリ">
+                    <input class="form-control rounded mr-sm-2" type="search" name="title" placeholder="商品名">
+                    <input class="form-control rounded mr-sm-2" type="search" name="category" placeholder="カテゴリ">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">検索</button>
                 </div>
             </form>

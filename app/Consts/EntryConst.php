@@ -9,7 +9,7 @@ class EntryConst
     const STATUS_APPROVAL = 1;
     const STATUS_REJECT = 2;
     const STATUS_LIST = [
-        'エントリー中' => self::STATUS_ENTRY,
+        '申請中' => self::STATUS_ENTRY,
         '依頼' => self::STATUS_APPROVAL,
         '却下' => self::STATUS_REJECT,
     ];

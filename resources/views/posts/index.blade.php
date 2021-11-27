@@ -15,7 +15,7 @@
                                 class="text-red-400 font-bold">{{ date('Y-m-d H:i:s', strtotime('-1 day')) < $post->created_at ? 'NEW' : '' }}</span>
                             {{ $post->created_at }}
                         </p>
-                        <img class="w-full mb-2" src="{{ $post->image_url }}" alt="">
+                        <img class="object-contain" src="{{ $post->image_url }}" alt="">
                         <p class="text-gray-700 text-base">{{ Str::limit($post->body, 50) }}</p>
                     </a>
                 </article>

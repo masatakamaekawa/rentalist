@@ -50,12 +50,10 @@ Route::get('/', [RentalController::class, 'index'])
     ->name('root');
 
 Route::resource('rentals', RentalController::class)
-    ->only(['create', 'store', 'edit', 'update', 'destroy'])
-    ->middleware('auth');
-
+    ->only(['create', 'store', 'edit', 'update', 'destroy']);
+    
 Route::resource('rentals', RentalController::class)
-    ->only(['show', 'index'])
-    ->middleware(['auth']);
+    ->only(['show', 'index']);
 
 Route::resource('rentals.rentalcomments', RentalCommentController::class)
     ->only(['create', 'store', 'edit', 'update', 'destroy'])

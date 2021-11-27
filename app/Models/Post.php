@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class Post extends Model
 {
@@ -22,6 +23,17 @@ class Post extends Model
         'delivery',
         
     ];
+
+    public function scopeMyPost(Builder $query)
+    {
+        $query->where(
+            'user_id',
+            Auth::user()->id
+        );
+
+        return $query;
+    }
+    
     public function user()
     {
         return $this->belongsTo(User::class);
