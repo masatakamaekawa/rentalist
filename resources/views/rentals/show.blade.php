@@ -85,15 +85,7 @@
             </section>
 
             @if ($rental->user_id == Auth::user()->id)
-                <hr>
-                <hr>
-                <hr>
-                <hr>
-                <hr>
-                <hr>
-                <hr>
-                <hr>
-                <hr>
+                <hr class="my-4">
                 <h2 class="d-grid gap-2 d-md-flex justify-content-md-end">貸出希望一覧</h2>
                 <div class="">
                     <form method="post">
@@ -125,6 +117,7 @@
                                                     }
                                                 
                                                 </style>
+                                                <hr class="my-4">
                                                 <form action="{{ route('charge') }}" method="POST">
                                                     {{ csrf_field() }}
                                                     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="{{ env('STRIPE_KEY') }}"
@@ -144,6 +137,7 @@
                 </div>
 
             @else
+            <hr class="my-4">
                 @if (empty($entries))
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <form action="{{ route('rentals.entries.store', $rental) }}" method="post">

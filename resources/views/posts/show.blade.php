@@ -75,7 +75,7 @@
                         <hr>
                     @endforeach
                 </section>
-                
+                <hr class="my-4">
                 <div class="content">
                     <style type="text/css">
                         button.stripe-button-el,

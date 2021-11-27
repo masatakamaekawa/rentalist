@@ -13,17 +13,17 @@
 
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('rentals.index') }}"
-                        class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block mr-2">レンタル希望一覧</a>
+                        class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block mr-2">希望一覧</a>
                     </a>
                 </div>
 
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('posts.index') }}"
-                        class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block">登録商品一覧</a>
+                        class="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline block">貸出一覧</a>
                     </a>
                 </div>
 
-            <form class="form-inline my-3 my-lg-0 ml-3">
+            <form class="hidden sm:flex sm:items-center sm:ml-6">
                 <div class="form-group">
                     <input class="form-control mr-sm-2" type="search" name="title" placeholder="商品名">
                     <input class="form-control mr-sm-2" type="search" name="category" placeholder="カテゴリ">
@@ -118,17 +118,17 @@
                 <div class="mt-3 space-y-1">
                     <!-- Authentication -->
                     <x-responsive-nav-link :href="route('rentals.create')">
-                        {{ __('Create Rental') }} 
+                        {{ __('レンタル希望リスト作成') }} 
                     </x-responsive-nav-link>
                     
                     <x-responsive-nav-link :href="route('posts.create')">
-                        {{ __('Create Post') }}
+                        {{ __('レンタル商品作成') }}
                     </x-responsive-nav-link>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
                                                     this.closest('form').submit();">
-                            {{ __('Log Out') }}
+                            {{ __('ログアウト') }}
                         </x-responsive-nav-link>
                     </form>
                 </div>
@@ -139,10 +139,10 @@
 
                 <div class="mt-3 space-y-1">
                     <x-responsive-nav-link :href="route('register')">
-                        {{ __('Sign Up') }}
+                        {{ __('サインアップ') }}
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('login')">
-                        {{ __('Log In') }}
+                        {{ __('ログイン') }}
                     </x-responsive-nav-link>
                 </div>
             @endauth
